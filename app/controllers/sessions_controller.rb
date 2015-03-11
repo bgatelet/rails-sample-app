@@ -10,7 +10,9 @@ class SessionsController < ApplicationController
       log_in(user)
       # Start log in session with cookies (see sessions_helper)
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-      redirect_to user
+      # redirect_back_or from sessionhelper so that after creation, the user is
+      # redirected back to the page they were trying to access without an account.
+      redirect_back_or user
     else
       # flash.now dissapears after next request, unlike flash which dissapears after next redirect.
       flash.now[:danger] = 'Invalid email/password combination.'

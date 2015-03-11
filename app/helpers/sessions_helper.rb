@@ -41,9 +41,25 @@ module SessionsHelper
     cookies.permanent[:remember_token] = user.remember_token
   end
 
+  def current_user?(user)
+    user == current_user
+  end
+
   def forget(user)
     user.forget
     cookies.delete(:user_id)
     cookies.delete(:remember_token)
+  end
+
+  # Redirect to the forwarding url if it exists, otherwise use the default url given.
+  def redirect_back_or(default)
+    redirect_to(session[:forwarding_url] || default)
+    session.delete(:forwarding_url)
+  end
+
+  # Store the requested url to be used another time for friendly forwarding.
+  # Makes sur that it is for a get request only.
+  def store_location
+    session[:forwarding_url] = request.url if request.get?
   end
 end
