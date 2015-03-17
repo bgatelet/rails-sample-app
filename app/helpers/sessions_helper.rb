@@ -21,7 +21,7 @@ module SessionsHelper
     elsif (user_id = cookies.signed[:user_id])
       # raise # way to test whether or not a branch of code is tested. Tests will pass if untested.
       user = User.find_by(id: user_id)
-      if user && user.authenticated?(cookies[:remember_token])
+      if user && user.authenticated?(:remember, cookies[:remember_token])
         log_in user
         @current_user = user
       end

@@ -20,12 +20,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      # Log user in upon signup
-      log_in @user
+      @user.send_activation_email
       # Flash issues message (success, info, warning, danger) that exist only on first reload or redirect.
-      flash[:success] = "Welcome to the sample app!"
-      # Equivalent to redirect_to user_url(@user)
-      redirect_to @user
+      flash[:info] = "Please check your email to activate your account."
+      redirect_to root_url
     else
       render 'new'
     end
