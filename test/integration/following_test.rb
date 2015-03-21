@@ -1,6 +1,3 @@
-# Errors exist in finding the link and delete tests, but everything works.
-
-
 require 'test_helper'
 
 class FollowingTest < ActionDispatch::IntegrationTest
